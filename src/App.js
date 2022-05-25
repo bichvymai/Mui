@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import JobCard from "./components/JobCard";
+import SearchAppBar from "./components/SearchAppBar";
+import jobs from "./jobs.json";
+import Grid from "@mui/material/Grid";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SearchAppBar />
+      <Grid container spacing={2} mt={2}>
+        {jobs.slice(0, 5).map((job) => (
+          <Grid key={job.id} item xs={12} md={4} lg={3}>
+            <JobCard job={job} />
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 }
