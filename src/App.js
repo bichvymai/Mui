@@ -3,6 +3,7 @@ import JobCard from "./components/JobCard";
 import SearchAppBar from "./components/SearchAppBar";
 import jobs from "./jobs.json";
 import Grid from "@mui/material/Grid";
+import PaginationControlled from "./components/PaginationControled";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           </Grid>
         ))}
       </Grid>
+      <PaginationControlled />
     </div>
   );
 }

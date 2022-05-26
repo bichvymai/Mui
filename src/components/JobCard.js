@@ -23,7 +23,7 @@ export default function JobCard({ job }) {
           {job.title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {job.skills.join("-")}
+          {job.skills.slice(0, 4).join("-")}
         </Typography>
         <Typography variant="body2">{job.description}</Typography>
       </CardContent>
