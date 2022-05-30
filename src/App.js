@@ -1,22 +1,17 @@
 import React from "react";
-import JobCard from "./components/JobCard";
+import { Routes, Route } from "react-router-dom";
 import SearchAppBar from "./components/SearchAppBar";
-import jobs from "./jobs.json";
-import Grid from "@mui/material/Grid";
-import PaginationControlled from "./components/PaginationControled";
+import HomePage from "./pages/HomePage";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   return (
     <div>
       <SearchAppBar />
-      <Grid container spacing={2} mt={2}>
-        {jobs.slice(0, 5).map((job) => (
-          <Grid key={job.id} item xs={12} md={4} lg={3}>
-            <JobCard job={job} />
-          </Grid>
-        ))}
-      </Grid>
-      <PaginationControlled />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/job/:id" element={<DetailPage />} />
+      </Routes>
     </div>
   );
 }
