@@ -13,7 +13,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
-import LoginIcon from "@mui/icons-material/Login";
+
+import SignInButton from "./SignInButton";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -124,9 +125,7 @@ export default function SearchAppBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Typography>Login</Typography>
-          </Box>
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -136,7 +135,7 @@ export default function SearchAppBar() {
               aria-haspopup="true"
               color="inherit"
             >
-              <LoginIcon />
+              <SignInButton />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
