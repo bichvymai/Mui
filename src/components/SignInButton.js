@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import LoginIcon from "@mui/icons-material/Login";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -21,6 +23,27 @@ export default function SignInButton() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const defaultValues = {
+    email: "vy@gmail.com",
+    password: "123",
+    remember: true,
+  };
+
+  const methods = useForm({ defaultValues });
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    control,
+    formState: { error, isSubmitting },
+  } = methods;
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    setError("afterSubmit", { message: "Server Response Error" });
+  };
 
   return (
     <div>
@@ -34,12 +57,12 @@ export default function SignInButton() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label htmlFor="usermane">Username</label>
+              <input type="text" autoComplete="off" {...register("username")} />
+            </div>
+          </form>
         </Box>
       </Modal>
     </div>
