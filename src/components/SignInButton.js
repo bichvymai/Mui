@@ -1,11 +1,24 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import LoginIcon from "@mui/icons-material/Login";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useForm, useFormContext, Controller } from "react-hook-form";
+import {
+  Stack,
+  Alert,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { LoadingButton } from "@mui/lab";
+import { FormProvider, FCheckBox, FTextField } from "./components/form";
 
 const style = {
   position: "absolute",
@@ -35,7 +48,7 @@ export default function SignInButton() {
     setError,
     handleSubmit,
     control,
-    formState: { error, isSubmitting },
+    formState: { errors, isSubmitting },
   } = methods;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -57,12 +70,56 @@ export default function SignInButton() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="usermane">Username</label>
-              <input type="text" autoComplete="off" {...register("username")} />
-            </div>
-          </form>
+          <Typography variant="h3" textAlign="center" mb={3}>
+            Login Form
+          </Typography>
+
+          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={3}>
+              {!!errors.afterSubmit && (
+                <Alert severity="error">{errors.afterSubmit.message}</Alert>
+              )}
+              <FTextField name="email" label="Email address" />
+
+              <FTextField
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Stack>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              sx={{ my: 2 }}
+            >
+              <FCheckBox name="remember" label="Remember me" />
+            </Stack>
+
+            <LoadingButton
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+            >
+              Login
+            </LoadingButton>
+          </FormProvider>
         </Box>
       </Modal>
     </div>
