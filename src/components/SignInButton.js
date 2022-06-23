@@ -18,7 +18,15 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { LoadingButton } from "@mui/lab";
-import { FormProvider, FCheckBox, FTextField } from "./components/form";
+import { FormProvider, FCheckBox, FTextField } from "./form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    username: yup.string().required(),
+  })
+  .required();
 
 const style = {
   position: "absolute",
@@ -37,6 +45,7 @@ export default function SignInButton() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const defaultValues = {
+    username: "",
     email: "vy@gmail.com",
     password: "123",
     remember: true,
@@ -55,7 +64,7 @@ export default function SignInButton() {
 
   const onSubmit = (data) => {
     console.log(data);
-    setError("afterSubmit", { message: "Server Response Error" });
+    // setError("afterSubmit", { message: "Server Response Error" });
   };
 
   return (
@@ -79,6 +88,8 @@ export default function SignInButton() {
               {!!errors.afterSubmit && (
                 <Alert severity="error">{errors.afterSubmit.message}</Alert>
               )}
+              <FTextField name="username" label="User Name" />
+
               <FTextField name="email" label="Email address" />
 
               <FTextField
