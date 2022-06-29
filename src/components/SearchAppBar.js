@@ -15,6 +15,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
 import SignInButton from "./SignInButton";
+import { Navigate, NavLink } from "react-router-dom";
+import useAuth from "../hook/useAuth";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,6 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const auth = useAuth();
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -94,6 +99,7 @@ export default function SearchAppBar() {
     </Menu>
   );
 
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -126,7 +132,7 @@ export default function SearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               edge="end"
@@ -137,6 +143,23 @@ export default function SearchAppBar() {
             >
               <SignInButton />
             </IconButton>
+          </Box> */}
+          <Box>
+            {auth.name ? (
+              <>
+                <Typography>Welcom {auth.name}</Typography>{" "}
+                <Button
+                  sx={{ color: "white" }}
+                  onClick={() => auth.logout(() => navigate("/"))}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Typography as={NavLink} to="/login">
+                Login
+              </Typography>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
