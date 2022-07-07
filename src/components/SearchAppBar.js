@@ -18,7 +18,7 @@ import SignInButton from "./SignInButton";
 import { Navigate, NavLink } from "react-router-dom";
 import useAuth from "../hook/useAuth";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,6 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const [searchInput, setSearchInput] = React.useState("");
   const auth = useAuth();
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -100,6 +102,17 @@ export default function SearchAppBar() {
   );
 
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(searchInput);
+    navigate(`?q=${searchInput}`);
+  };
+
+  const location = useLocation();
+  console.log(location);
+  var params2a = new URLSearchParams(location.search);
+  console.log(params2a.get("q"));
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -125,10 +138,15 @@ export default function SearchAppBar() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
+            <form onSubmit={handleSubmit}>
+              <StyledInputBase
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </form>
           </Search>
           <Box sx={{ flexGrow: 1 }} />
 
